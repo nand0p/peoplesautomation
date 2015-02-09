@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>KEY</name>
+          <description>pem key filename at jenkins root</description>
+          <defaultValue>peoples</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>AMI</name>
+          <description>centos 6 updates</description>
+          <defaultValue>ami-bc8131d4</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>ACCESS_KEY</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>SECRET_KEY</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>AZ</name>
+          <description></description>
+          <defaultValue>us-east-1a</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TYPE</name>
+          <description></description>
+          <defaultValue>t1.micro</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>instanceid=$(ec2-run-instances -O $ACCESS_KEY -W $SECRET_KEY $AMI -k $KEY -t $TYPE -z $AZ | grep INSTANCE | cut -f2)
+
+sleep 5
+
+secgroup=$(ec2-describe-instances -O $ACCESS_KEY -W $SECRET_KEY $instanceid|grep INSTANCE|cut -f28)
+newhost=$(ec2-describe-instances -O $ACCESS_KEY -W $SECRET_KEY $instanceid |grep INSTANCE | cut -f4)
+ec2-authorize -O $ACCESS_KEY -W $SECRET_KEY $secgroup -P tcp -p 80 -s 0.0.0.0/0 || true
+
+sleep 60
+
+ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost &quot;yum -y install epel-release &amp;&amp; yum -y install nginx&quot;
+ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost &quot;iptables -I INPUT -p tcp --dport 80 -j ACCEPT&quot;
+ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost &quot;echo &apos;Automation for the People&apos; &gt; /usr/share/nginx/html/index.html&quot;
+ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost &quot;service nginx start &amp;&amp; chkconfig nginx on&quot;
+
+sleep 5
+
+
+result=$(curl http://$newhost)
+if [ &quot;$result&quot; == &quot;Automation for the People&quot; ]; then echo &quot;Automation for the People is SUCCESS&quot;; else exit 1; fi
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <EnvInjectBuildWrapper plugin="envinject@1.90">
+      <info>
+        <propertiesContent>EC2_HOME=/opt/ec2
+PATH=$PATH:/opt/ec2/bin
+JAVA_HOME=/usr
+</propertiesContent>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+  </buildWrappers>
+</project>
