@@ -33,5 +33,6 @@ if status == "running":
 
 print("waiting for instance...")
 time.sleep(30)
+
 with settings(host_string='%s' % thishost):
     deployNginx()
