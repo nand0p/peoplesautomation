@@ -2,7 +2,7 @@
 
 
 ```
-bash script "./peoples.shell.sh [access_key] [secret_key]"
+bash script "./peoples.ec2tools.sh [access_key] [secret_key]"
  - requires ec2 apitools 1.7.3.0 2014-10-01
 ```
 
