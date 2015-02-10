@@ -56,7 +56,7 @@ secgroup=$(ec2-describe-instances -O $ACCESS_KEY -W $SECRET_KEY $instanceid|grep
 newhost=$(ec2-describe-instances -O $ACCESS_KEY -W $SECRET_KEY $instanceid |grep INSTANCE | cut -f4)
 ec2-authorize -O $ACCESS_KEY -W $SECRET_KEY $secgroup -P tcp -p 80 -s 0.0.0.0/0 || true
 
-sleep 30
+sleep 45
 
 ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost &quot;yum -y install epel-release &amp;&amp; yum -y install nginx&quot;
 ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost &quot;iptables -I INPUT -p tcp --dport 80 -j ACCEPT&quot;
