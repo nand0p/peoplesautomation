@@ -1,6 +1,6 @@
 class peoples::automation {
-	package { "epel-release: ensure => "installed" }
-	package { "nginx: ensure => "installed", Require => Package["epel-release"] }
-	file { "/usr/share/nginx/html/index.html": source  => "puppet:///modules/peoples/index.html", Require => Package["nginx"] }
-        service { "nginx": ensure => running, Require => Package["nginx"] }
+	Package { "epel-release: Ensure => "installed" }
+	Package { "nginx: Ensure => "installed", Require => Package["epel-release"] }
+	File { "/usr/share/nginx/html/index.html": Source  => "puppet:///modules/peoples/index.html", Require => Package["nginx"] }
+        Service { "nginx": Ensure => running, Require => Package["nginx"] }
 }
