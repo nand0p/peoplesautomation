@@ -1,5 +1,6 @@
 <h1>Automation for the People</h1>
 
+
 ```
 bash script "./peoples.sh [access_key] [secret_key]"
  - requires ec2 apitools 1.7.3.0 2014-10-01
