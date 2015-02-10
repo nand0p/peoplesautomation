@@ -34,7 +34,6 @@ ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost "service nginx start && 
 
 sleep 5
 
-
 result=$(curl http://$newhost)
 if [ "$result" == "Automation for the People" ]; then echo "Automation for the People is SUCCESS"; else exit 1; fi
 
