@@ -12,12 +12,12 @@ jenkins conf "jenkins.xml"
 ```
 
 ```
-python script ("./peoples.py [access_key] [secret_key]") 
+python script "./peoples.py [access_key] [secret_key]"
  - boto and fabric (fabfile import)
 ```
 
 ```
-puppet class ("peoples::automation") 
+puppet class "peoples::automation"
  - allinclusive to bootstrap microapp 
  - puppetmaster requires jfryman-nginx puppet mod 
 ```
