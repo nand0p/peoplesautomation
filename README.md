@@ -11,7 +11,7 @@ jenkins conf "jenkins.xml"
 
 
 python script ("./peoples.py [access_key] [secret_key]") 
- - boto and fabric (fabfile include)
+ - boto and fabric (fabfile import)
 
 
 puppet class ("peoples::automation") 
