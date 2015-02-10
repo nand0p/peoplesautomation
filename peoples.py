@@ -7,8 +7,8 @@ import subprocess
 from fabfile import deployNginx
 from fabric.context_managers import settings
 
-aws_access_key_id='AKIAJVKYWXZADWBFXYTQ'
-aws_secret_access_key='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'
+aws_access_key_id=''
+aws_secret_access_key=''
 
 conn = boto.ec2.connect_to_region("us-east-1", 
 	aws_access_key_id=aws_access_key_id,
