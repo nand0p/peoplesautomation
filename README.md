@@ -15,7 +15,7 @@ python script ("./peoples.py <access_key> <secret_key>")
 
 
 puppet class ("peoples::automation") 
- - allinclusive to bootstrap microapp
+ - allinclusive to bootstrap microapp 
  - puppetmaster requires jfryman-nginx puppet mod 
 
 
