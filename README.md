@@ -26,3 +26,7 @@ puppet class "peoples::automation"
 ```
 chef recipe "peoples.rb"
 ```
+
+```
+knife with puppet "peoples.knife.sh"
+```
