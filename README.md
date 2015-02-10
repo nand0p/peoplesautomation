@@ -23,3 +23,6 @@ puppet class "peoples::automation"
  - puppetmaster requires jfryman-nginx puppet mod 
 ```
 
+```
+chef recipe "peoples.rb"
+```
