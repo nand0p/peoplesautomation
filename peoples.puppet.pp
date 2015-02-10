@@ -4,3 +4,4 @@ class peoples::automation {
 	File { "/usr/share/nginx/html/index.html": Source  => "puppet:///modules/peoples/index.html", Require => Package["nginx"] }
         Service { "nginx": Ensure => running, Require => Package["nginx"] }
 }
+
