@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-ACCESS_KEY=
-SECRET_KEY=
+ACCESS_KEY=$1
+SECRET_KEY=$2
 
 AMI=ami-bc8131d4  #centos6 with updates
 KEY=peoples  #aws instance root key
