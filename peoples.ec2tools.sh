@@ -29,7 +29,8 @@ sleep 60
 
 ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost "yum -y install epel-release && yum -y install nginx"
 ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost "iptables -I INPUT -p tcp --dport 80 -j ACCEPT"
-ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost "echo 'Automation for the People' > /usr/share/nginx/html/index.html"
+#ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost "echo 'Automation for the People' > /usr/share/nginx/html/index.html"
+scp -o StrictHostKeyChecking=no -i ~/$KEY index.html root@newhost:/usr/share/nginx/html/
 ssh -o StrictHostKeyChecking=no -i ~/$KEY root@$newhost "service nginx start && chkconfig nginx on"
 
 sleep 5
